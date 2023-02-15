@@ -20,9 +20,9 @@ function getTodaysEvents(calendarSource) {
     today.setHours(0, 0, 0, 0); // Get event from today at midnight
 
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 30);
+    tomorrow.setDate(today.getDate() + 30); /* ONLY CHANGE */
 
-    const todaysEvents = src.getEvents(today, tomorrow); /* this tomorrow probably means the range of events */
+    const todaysEvents = src.getEvents(today, tomorrow);
 
     return todaysEvents;
 }
