@@ -114,7 +114,7 @@ function eventStatusToIndicatorText(eventStatus) {
 
     
     function displayNoEvents() {
-        return "No events Today!"; /* TODO: Implements this */
+        return "Done for Today!"; /* TODO: Implements this */
     }
 
 
