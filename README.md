@@ -22,3 +22,7 @@ You can install the extension from [the extensions.gnome.org page](https://exten
 
 ## Forked so I can change the "Done for today" to make it show the next event in calendar even if it's not on the same date
 original developer: https://github.com/artisticat1/gnome-next-up
+
+## To-do
+- [ ] Have it show next event this week, only until Sunday
+      
