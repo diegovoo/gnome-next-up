@@ -33,7 +33,7 @@ const _ = ExtensionUtils.gettext;
 
 
 const Me = ExtensionUtils.getCurrentExtension();
-const DateHelperFunctions = Me.imports.dateHelperFunctions;
+const DateHelperFunctions = Me.imports.dateHelperFunctions; /* explore these imports */
 
 
 const Indicator = GObject.registerClass(

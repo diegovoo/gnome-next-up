@@ -22,7 +22,7 @@ function getTodaysEvents(calendarSource) {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    const todaysEvents = src.getEvents(today, tomorrow);
+    const todaysEvents = src.getEvents(today, tomorrow); /* this tomorrow probably means the range of events */
 
     return todaysEvents;
 }
@@ -112,8 +112,9 @@ function eventStatusToIndicatorText(eventStatus) {
         return `Ends in ${endsInText}: ${event.summary}`;
     }
 
+    
     function displayNoEvents() {
-        return "Done for today!";
+        return "No future events!"; /* TODO: Implements this */
     }
 
 
@@ -132,7 +133,7 @@ function eventStatusToIndicatorText(eventStatus) {
             return displayNextEvent(nextEvent);
         }
         else {
-            return displayNoEvents();
+            return displayNoEvents(); /* found it */
         }
     }
 }
