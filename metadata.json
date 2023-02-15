@@ -1,6 +1,6 @@
 {
-  "name": "Next Up",
-  "description": "Show your next calendar event in the status bar",
+  "name": "Next Up 2.0",
+  "description": "Exactly like next-up, but shows next event up to a month from now",
   "uuid": "next-up@diegovoo.github.com",
   "shell-version": [
     "42",
