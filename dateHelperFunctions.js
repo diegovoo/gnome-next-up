@@ -20,7 +20,7 @@ function getTodaysEvents(calendarSource) {
     today.setHours(0, 0, 0, 0); // Get event from today at midnight
 
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+    tomorrow.setDate(today.getDate() + 30);
 
     const todaysEvents = src.getEvents(today, tomorrow); /* this tomorrow probably means the range of events */
 
@@ -114,7 +114,7 @@ function eventStatusToIndicatorText(eventStatus) {
 
     
     function displayNoEvents() {
-        return "Done for Today!"; /* TODO: Implements this */
+        return "No events this month!";
     }
 
 

@@ -1,11 +1,11 @@
 {
   "name": "Next Up",
   "description": "Show your next calendar event in the status bar",
-  "uuid": "next-up@artisticat1.github.com",
+  "uuid": "next-up@diegovoo.github.com",
   "shell-version": [
     "42",
     "43"
   ],
-  "url": "https://github.com/artisticat1/gnome-next-up",
-  "version": 3
+  "url": "https://github.com/diegovoo/gnome-next-up",
+  "version": 1
 }
