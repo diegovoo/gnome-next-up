@@ -21,3 +21,4 @@ You can install the extension from [the extensions.gnome.org page](https://exten
 - [Party popper icon](https://www.flaticon.com/free-icon/party-popper_6335608) by [Ayub Irawan](https://www.flaticon.com/authors/ayub-irawan)
 
 ## Forked so I can change the "Done for today" to make it show the next event in calendar even if it's not on the same date
+original developer: https://github.com/artisticat1/gnome-next-up
