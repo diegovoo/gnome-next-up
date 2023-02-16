@@ -1,6 +1,6 @@
 const MAX_EVENT_SUMMARY_LENGTH = 35;
 
-
+/* returns a string shorter than MAX_EVENT_SUMMARY_LENGTH */
 function trimLongEventName(summary) {
     if (summary.length > MAX_EVENT_SUMMARY_LENGTH) {
         return summary.substring(0, MAX_EVENT_SUMMARY_LENGTH) + "...";
@@ -10,9 +10,8 @@ function trimLongEventName(summary) {
     }
 }
 
-
+/* returns events up to 24h from now */
 function getTodaysEvents(calendarSource) {
-
     const src = calendarSource;
     src._loadEvents(true);
 
@@ -20,14 +19,30 @@ function getTodaysEvents(calendarSource) {
     today.setHours(0, 0, 0, 0); // Get event from today at midnight
 
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 30); /* ONLY CHANGE */
+    tomorrow.setDate(today.getDate() + 1);
 
     const todaysEvents = src.getEvents(today, tomorrow);
 
     return todaysEvents;
 }
 
+/* returns events up to a month from now */
+function getMonthEvents(calendarSource) {
+    const src = calendarSource;
+    src._loadEvents(true);
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const month = new Date(today); // 30 days from today
+    month.setDate(today.getDate() + 30);
+
+    const monthEvents = src.getEvents(today, month);
+
+    return monthEvents;
+}
+
+/* returns current event and next event */
 function getNextEventsToDisplay(todaysEvents) {
     const now = new Date();
     const N = todaysEvents.length;
@@ -82,42 +97,43 @@ function getNextEventsToDisplay(todaysEvents) {
     };
 }
 
-
-
+/* returns text that is going to be displayed */
 function eventStatusToIndicatorText(eventStatus) {
 
+    /* returns string -> time TILL event */
     function displayNextEvent(event) {
         const timeText = getTimeOfEventAsText(event.date);
         const diffText = getTimeToEventAsText(event.date);
 
         const summary = trimLongEventName(event.summary);
 
-
         return `In ${diffText}: ${summary} at ${timeText}`;
     }
 
+    /* returns string -> time till event END and time of NEXT event */
     function displayCurrentEventAndNextEvent(currentEvent, nextEvent) {
         const endsInText = getTimeToEventAsText(currentEvent.end);
         const timeText = getTimeOfEventAsText(nextEvent.date);
 
         const summary = trimLongEventName(nextEvent.summary);
 
-
         return `Ends in ${endsInText}. Next: ${summary} at ${timeText}`;
     }
 
+    /* returns string -> time till event END */
     function displayCurrentEvent(event) {
         const endsInText = getTimeToEventAsText(event.end);
 
         return `Ends in ${endsInText}: ${event.summary}`;
     }
 
-    
+    /* returns string -> no events */
     function displayNoEvents() {
         return "No events this month!";
     }
 
-
+    /* extension calls next events to display and then this function calls each of the above
+        functions to display the correct text */
     const { currentEvent, nextEvent } = eventStatus;
 
     if (currentEvent != null) {
@@ -133,12 +149,10 @@ function eventStatusToIndicatorText(eventStatus) {
             return displayNextEvent(nextEvent);
         }
         else {
-            return displayNoEvents(); /* found it */
+            return displayNoEvents();
         }
     }
 }
-
-
 
 function getTimeOfEventAsText(eventDate) {
     const hrs = eventDate.getHours();
@@ -149,7 +163,6 @@ function getTimeOfEventAsText(eventDate) {
     const time = `${hrs}:${mins}`;
     return time;
 }
-
 
 function getTimeToEventAsText(eventDate) {
 

@@ -202,7 +202,7 @@ class Extension {
         const text = DateHelperFunctions.eventStatusToIndicatorText(eventStatus);
 
 
-        if ((eventStatus.currentEvent === null) && (eventStatus.nextEvent === null)) {
+        if ((eventStatus.currentEvent === null) && (eventStatus.nextEvent === null)) { /* === returns false if not the same type */
             this._indicator.showConfettiIcon();
         }
         else {
