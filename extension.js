@@ -143,7 +143,7 @@ class Extension {
         this._indicator = new Indicator();
 
         this._settings = ExtensionUtils.getSettings("org.gnome.shell.extensions.next-up");
-        this._settingChangedSignal = this._settings.connect("changed::which-panel", () => {
+        this._settingChangedSignal = this._settings.connect("changed::which-panel" || "changed::events-starting", () => {
             this.unloadIndicator();
             this.loadIndicator();
         });
@@ -184,11 +184,23 @@ class Extension {
         const whichPanel = this._settings.get_int("which-panel");
 
         boxes[whichPanel].insert_child_at_index(this._indicator.container, 0);
+
+        const boxes2 = [
+            Main.panel._todayBox,
+            Main.panel._thisWeekBox,
+            Main.panel._thisMonthBox
+        ];
+
+        const eventsStarting = this._settings.get_int("events-starting");
+
+        boxes2[eventsStarting].insert_child_at_index(this._indicator.container2, 0);
+
     }
 
 
     unloadIndicator() {
         this._indicator.container.get_parent().remove_actor(this._indicator.container);
+        this._indicator.container2.get_parent().remove_actor(this._indicator.container2);
     }
 
 
