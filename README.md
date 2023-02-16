@@ -24,6 +24,7 @@ You can install the extension from [the extensions.gnome.org page](https://exten
 original developer: https://github.com/artisticat1/gnome-next-up
 
 ## To-do
+- [ ] Document project
 - [ ] Have it show next event this week, only until Sunday
 - [ ] Be able to select the preferences i'm adding on the dropdown menu
 - [ ] If (today) -> show time till event; else -> don't show time | my day starts @ 6 am  

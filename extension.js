@@ -31,10 +31,8 @@ const PopupMenu = imports.ui.popupMenu;
 
 const _ = ExtensionUtils.gettext;
 
-
 const Me = ExtensionUtils.getCurrentExtension();
 const DateHelperFunctions = Me.imports.dateHelperFunctions;
-
 
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
@@ -46,8 +44,6 @@ const Indicator = GObject.registerClass(
             this._loadGUI();
             this._initialiseMenu();
         }
-
-
 
         _loadGUI() {
             this._menuLayout = new St.BoxLayout({

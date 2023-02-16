@@ -28,6 +28,15 @@ function fillPreferencesWindow(window) {
         valign: Gtk.Align.CENTER
     });
 
+    // Create new preferences row 2
+    const row2 = new Adw.ActionRow({ title: "Show next events starting" });
+    group.add(row2);
+
+    const dropdown2 = new Gtk.DropDown({
+        model: Gtk.StringList.new(["Today", "This week", "This month"]),
+        valign: Gtk.Align.CENTER
+    });
+
     settings.bind(
         "which-panel",
         dropdown,
@@ -35,9 +44,18 @@ function fillPreferencesWindow(window) {
         Gio.SettingsBindFlags.DEFAULT
     );
 
+    settings.bind(
+        "events-starting",
+        dropdown2,
+        "selected",
+        Gio.SettingsBindFlags.DEFAULT
+    );
 
     row.add_suffix(dropdown);
     row.activatable_widget = dropdown;
+
+    row2.add_suffix(dropdown2);
+    row2.activatable_widget = dropdown2;
 
     // Add our page to the window
     window.add(page);
