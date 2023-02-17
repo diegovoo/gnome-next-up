@@ -34,16 +34,70 @@ const _ = ExtensionUtils.gettext;
 const Me = ExtensionUtils.getCurrentExtension();
 const DateHelperFunctions = Me.imports.dateHelperFunctions;
 
-const Indicator = GObject.registerClass(
-    class Indicator extends PanelMenu.Button {
-        _init() {
-            super._init(0.0, _('Next Up Indicator'));
 
+const _makeLogFunction(prefix) {
+    return msg => {
+        GLib._load_structured(
+            'next-up',
+            Glib.LogLevelFlags.LEVEL_MESSAGE,
+            {
+                'MESSAGE': msg,
+                SYSLOG_IDENTIFIER: 'org.gnome.shell.extensions.next-up',
+                CODE_FILE: file,
+                CODE_FUNC: `${func}`,
+                CODE_LINE: `${line}`
+            }
+        );
+    }
+}
+
+const Indicator = GObject.registerClass(class Indicator extends PanelMenu.Button {
+        _init() {
+            super._init(St.Align.START);
+            this._settings = ExtensionUtils.getSettings();
             this._calendarSource = new Calendar.DBusEventSource();
 
             this._loadGUI();
             this._initialiseMenu();
+
+
+            this._menuLayout = new St.BoxLayout();
+
+            this._addSettingChangedSignal('which-panel', this._whichPanelChanged.bind(this));
+            this._addSettingChangedSignal('events-starting', this._eventsStartingChanged.bind(this));
+
+            this.connect('destroy', this._onButtonDestroy.bind(this));
+
+            this._updateUI(true);
         }
+
+        _whichPanelChanged() {
+            this.container.get_parent().remove_actor(this.container);
+
+            let boxes = {
+                left: Main.panel._leftBox,
+                center: Main.panel._centerBox,
+                right: Main.panel._rightBox
+            };
+
+            let p = this.positionInPanel;
+            let i = this._settings.get_int('panel-box-index');
+            boxes[p].insert_child_at_index(this.container, i);
+        }
+
+        _eventsStartingChanged() {
+            this.container.get_parent().remove_actor(this.container);
+
+            /* changes settings */ 
+            let boxes = {
+                today: 
+                week:
+                month:
+            };
+
+            let p = this.eventsStarting;
+            let i = this._settings.get_int('events-starting-box-index');
+            boxes[p].insert_child_at_index(this.container, i);
 
         _loadGUI() {
             this._menuLayout = new St.BoxLayout({
@@ -128,9 +182,7 @@ const Indicator = GObject.registerClass(
 
             return Clutter.EVENT_PROPAGATE;
         }
-    });
-
-
+});
 
 class Extension {
     constructor(uuid) {
@@ -142,12 +194,16 @@ class Extension {
     enable() {
         this._indicator = new Indicator();
 
-        this._settings = ExtensionUtils.getSettings("org.gnome.shell.extensions.next-up");
-        this._settingChangedSignal = this._settings.connect("changed::which-panel" || "changed::events-starting", () => {
+        this._settings = ExtensionUtils.getSettings();
+        this._settingChangedSignal = this._settings.connect("changed::which-panel", () => {
             this.unloadIndicator();
             this.loadIndicator();
         });
 
+/*        this._settingChangedSignal = this._settings.connect("changed::events-starting", () => {
+            this.unloadIndicator();
+            this.loadIndicator();
+        }); */
 
         // Wait 3 seconds before loading the indicator
         // So that it isn't loaded too early and positioned after other elements in the panel

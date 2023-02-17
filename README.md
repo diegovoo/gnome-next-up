@@ -29,3 +29,4 @@ original developer: https://github.com/artisticat1/gnome-next-up
 - [ ] Be able to select the preferences i'm adding on the dropdown menu
 - [ ] If (today) -> show time till event; else -> don't show time | my day starts @ 6 am  
 - [ ] When set to be in the middle, don't move the default placement of date and time right now
+- [ ] When showing current event AND next event, it doesnt show the day of next event
