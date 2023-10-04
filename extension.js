@@ -39,7 +39,7 @@ const DateHelperFunctions = Me.imports.dateHelperFunctions;
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
         _init() {
-            super._init(0.0, _('Next Up Indicator'));
+            super._init(0.0, _('Next Up 2 Indicator'));
 
             this._calendarSource = new Calendar.DBusEventSource();
 
