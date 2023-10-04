@@ -18,7 +18,7 @@
 
 /* exported init */
 
-const GETTEXT_DOMAIN = "next-up-indicator-extension";
+const GETTEXT_DOMAIN = "next-up-2-indicator-extension";
 
 const { GObject, St, Clutter, GLib } = imports.gi;
 
@@ -146,7 +146,7 @@ class Extension {
     enable() {
         this._indicator = new Indicator();
 
-        this._settings = ExtensionUtils.getSettings("org.gnome.shell.extensions.next-up");
+        this._settings = ExtensionUtils.getSettings("org.gnome.shell.extensions.next-up-2");
         this._settingChangedSignal = this._settings.connect("changed::which-panel", () => {
             this.unloadIndicator();
             this.loadIndicator();
